@@ -39,16 +39,13 @@ export const DisplayText = () => {
           className="flex items-center gap-2 border-b pb-2 flex-nowrap"
         >
           <div className="flex-1">
-            <h2 className="text-2xl text-sky-700 font-bold">{todo.title}</h2>
+            <h2 className="text-2xl text-sky-700 font-bold">{todo.isCompleted ? <s>{todo.title}</s> : todo.title}</h2>
             <details className="text-gray-500">
               <summary>説明</summary>
               <p>{todo.description}</p>
             </details>
             <h2>
               <span className="text-gray-500">締切: {todo.endDate}</span>
-              <span className="text-gray-500">
-                {todo.isCompleted ? "✓ 完了" : "未完了"}
-              </span>
             </h2>
           </div>
           <div className="flex gap-2 shrink-0">
