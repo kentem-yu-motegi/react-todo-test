@@ -26,13 +26,24 @@ export const DisplayText = () => {
     setTodoValue(newTodos);
   };
 
+  const serchTodos = (keyword: string) => {
+    const newTodos = todoValue.filter((todo) => todo.title.includes(keyword) || todo.description.includes(keyword));
+    setTodoValue(newTodos);
+  };
+
   return (
     <div className="space-y-2 border-t-2 pt-4 w-full max-w-4xl">
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 border-slate-500 rounded border-2 p-2 justify-center  text-lg font-bold">
         <span>合計: {total}</span>
         <span>完了: {completed}</span>
         <span>未完了: {uncompleted}</span>
       </div>
+      <select className="mb-4 p-2 border-2 border-slate-500 rounded">
+        <option value="all">すべて表示</option>
+        <option value="completed">完了したタスク</option>
+        <option value="uncompleted">未完了のタスク</option>
+      </select>
+      <div><input className="p-2 border-2 border-slate-500 rounded" type="text" placeholder="検索"></input><button onClick={() => serchTodos("ｚｄ")} className="px-4 py-2 bg-slate-700 text-white rounded">検索</button></div>
       {todoValue.map((todo) => (
         <div
           key={todo.id}
