@@ -11,16 +11,18 @@ export const InputContainer = () => {
       return;
     }
 
-    if (formData.description === ""){
-      formData.description = "なし";
-    }
+    const description =
+      typeof formData.description === "string"
+        ? formData.description.trim()
+        : "";
 
     // 締切日のフォーマットをYYYY-MM-DDに変換
     const rawEndDate = formData.endDate as string;
-    const endDate = rawEndDate ? new Date(rawEndDate).toISOString().slice(0, 10): "";
+    const endDate = rawEndDate
+      ? new Date(rawEndDate).toISOString().slice(0, 10)
+      : "なし";
 
-
-    if (formData.endDate === ""){
+    if (formData.endDate === "") {
       formData.endDate = "なし";
     }
 
@@ -29,7 +31,7 @@ export const InputContainer = () => {
       {
         id: crypto.randomUUID(),
         title: formData.title as string,
-        description: formData.description as string,
+        description,
         endDate: endDate,
         isCompleted: false,
       },
@@ -41,14 +43,16 @@ export const InputContainer = () => {
       <input
         name="title"
         type="text"
+        placeholder="例：買い物に行く"
+        required
         className="p-2 border-2 border-slate-500 rounded"
       />
       <textarea
         name="description"
-        className="p-2 border-2 border-slate-500 rounded"
+        placeholder="例：パン、ヨーグルト、バナナ、牛乳"
+        className="p-2 border-2 border-slate-500 rounded resize-none w-[300px] h-[100px]"
         rows={4}
-      >
-      </textarea>
+      ></textarea>
       <input
         name="endDate"
         type="date"

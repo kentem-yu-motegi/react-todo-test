@@ -28,10 +28,22 @@ export const DisplayText = () => {
 
   return (
     <div className="space-y-2 border-t-2 pt-4 w-full max-w-4xl">
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 border-slate-500 rounded border-2 p-2 justify-center  text-lg font-bold">
         <span>合計: {total}</span>
         <span>完了: {completed}</span>
         <span>未完了: {uncompleted}</span>
+      </div>
+      <select className="mb-4 p-2 border-2 border-slate-500 rounded">
+        <option value="all">すべてのToDo</option>
+        <option value="completed">完了したToDo</option>
+        <option value="uncompleted">未完了のToDo</option>
+      </select>
+      <div>
+        <input
+          className="p-2 border-2 border-slate-500 rounded"
+          type="text"
+          placeholder="検索"
+        ></input>
       </div>
       {todoValue.map((todo) => (
         <div
@@ -39,23 +51,24 @@ export const DisplayText = () => {
           className="flex items-center gap-2 border-b pb-2 flex-nowrap"
         >
           <div className="flex-1">
-            <h2 className="text-2xl text-sky-700 font-bold">{todo.title}</h2>
-            <details className="text-gray-500">
-              <summary>説明</summary>
-              <p>{todo.description}</p>
-            </details>
+            <h2 className="text-2xl text-sky-700 font-bold">
+              {todo.isCompleted ? <s>{todo.title}</s> : todo.title}
+            </h2>
+            {todo.description && (
+              <details className="text-gray-500">
+                <summary>説明</summary>
+                <p>{todo.description}</p>
+              </details>
+            )}
             <h2>
               <span className="text-gray-500">締切: {todo.endDate}</span>
-              <span className="text-gray-500">
-                {todo.isCompleted ? "✓ 完了" : "未完了"}
-              </span>
             </h2>
           </div>
           <div className="flex gap-2 shrink-0">
             <button
               type="button"
               onClick={() => todoCompleted(todo.id)}
-              className="px-2 py-1 bg-blue-500 text-white rounded"
+              className={`px-2 py-1 text-white rounded ${todo.isCompleted ? "bg-yellow-500" : "bg-green-500"}`}
             >
               {todo.isCompleted ? "未完了にする" : "完了にする"}
             </button>
