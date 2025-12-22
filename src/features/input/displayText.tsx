@@ -29,9 +29,9 @@ export const DisplayText = () => {
   return (
     <div className="space-y-2 border-t-2 pt-4 w-full max-w-4xl">
       <div className="flex gap-2 mb-4 border-slate-500 rounded border-2 p-2 justify-center  text-lg font-bold">
-        <span>合計: {total}</span>
         <span>完了: {completed}</span>
         <span>未完了: {uncompleted}</span>
+        <span>合計: {total}</span>
       </div>
       <select className="mb-4 p-2 border-2 border-slate-500 rounded">
         <option value="all">すべてのToDo</option>
