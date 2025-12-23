@@ -1,11 +1,24 @@
+import { useState } from "react";
 import { useInputAtom } from "./inputAtom";
 
 export const DisplayText = () => {
   const { todoValue, setTodoValue } = useInputAtom();
+  const [filter, setFilter] = useState<"all" | "completed" | "uncompleted">(
+    "all",
+  );
+  const [keyword, setKeyword] = useState("");
 
   const total = todoValue.length;
   const completed = todoValue.filter((todo) => todo.isCompleted).length;
   const uncompleted = total - completed;
+
+  const filteredTodos = todoValue
+    .filter((todo) => {
+      if (filter === "completed") return todo.isCompleted;
+      if (filter === "uncompleted") return !todo.isCompleted;
+      return true;
+    })
+    .filter((todo) => todo.title.toLowerCase().includes(keyword.toLowerCase()));
 
   const todoCompleted = (id: string) => {
     const newTodos = todoValue.map((todo) =>
@@ -29,23 +42,31 @@ export const DisplayText = () => {
   return (
     <div className="space-y-2 border-t-2 pt-4 w-full max-w-4xl">
       <div className="flex gap-2 mb-4 border-slate-500 rounded border-2 p-2 justify-center  text-lg font-bold">
-        <span>合計: {total}</span>
         <span>完了: {completed}</span>
         <span>未完了: {uncompleted}</span>
+        <span>合計: {total}</span>
       </div>
-      <select className="mb-4 p-2 border-2 border-slate-500 rounded">
-        <option value="all">すべてのToDo</option>
-        <option value="completed">完了したToDo</option>
-        <option value="uncompleted">未完了のToDo</option>
-      </select>
-      <div>
+      <div className="flex items-center gap-4 mb-4">
+        <select
+          className="p-2 border-2 border-slate-500 rounded"
+          value={filter}
+          onChange={(e) =>
+            setFilter(e.target.value as "all" | "completed" | "uncompleted")
+          }
+        >
+          <option value="all">すべてのToDo</option>
+          <option value="completed">完了したToDo</option>
+          <option value="uncompleted">未完了のToDo</option>
+        </select>
         <input
           className="p-2 border-2 border-slate-500 rounded"
           type="text"
-          placeholder="検索"
+          placeholder="タイトル検索"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
         ></input>
       </div>
-      {todoValue.map((todo) => (
+      {filteredTodos.map((todo) => (
         <div
           key={todo.id}
           className="flex items-center gap-2 border-b pb-2 flex-nowrap"
