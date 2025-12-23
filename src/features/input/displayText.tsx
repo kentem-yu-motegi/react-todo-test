@@ -33,12 +33,12 @@ export const DisplayText = () => {
         <span>未完了: {uncompleted}</span>
         <span>合計: {total}</span>
       </div>
-      <select className="mb-4 p-2 border-2 border-slate-500 rounded">
-        <option value="all">すべてのToDo</option>
-        <option value="completed">完了したToDo</option>
-        <option value="uncompleted">未完了のToDo</option>
-      </select>
-      <div>
+      <div className="flex items-center gap-4 mb-4">
+        <select className="p-2 border-2 border-slate-500 rounded">
+          <option value="all">すべてのToDo</option>
+          <option value="completed">完了したToDo</option>
+          <option value="uncompleted">未完了のToDo</option>
+        </select>
         <input
           className="p-2 border-2 border-slate-500 rounded"
           type="text"
