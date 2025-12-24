@@ -6,7 +6,8 @@ export const DisplayText = () => {
   const [filter, setFilter] = useState<"all" | "completed" | "uncompleted">(
     "all",
   );
-  const [keyword, setKeyword] = useState("");
+  const [titleKeyword, setTitleKeyword] = useState("");
+  const [descriptionKeyword, setDescriptionKeyword] = useState("");
 
   const total = todoValue.length;
   const completed = todoValue.filter((todo) => todo.isCompleted).length;
@@ -18,7 +19,8 @@ export const DisplayText = () => {
       if (filter === "uncompleted") return !todo.isCompleted;
       return true;
     })
-    .filter((todo) => todo.title.toLowerCase().includes(keyword.toLowerCase()));
+    .filter((todo) => todo.title.includes(titleKeyword))
+    .filter((todo) => todo.description.includes(descriptionKeyword));
 
   const todoCompleted = (id: string) => {
     const newTodos = todoValue.map((todo) =>
@@ -62,8 +64,15 @@ export const DisplayText = () => {
           className="p-2 border-2 border-slate-500 rounded"
           type="text"
           placeholder="タイトル検索"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          value={titleKeyword}
+          onChange={(e) => setTitleKeyword(e.target.value)}
+        ></input>
+        <input
+          className="p-2 border-2 border-slate-500 rounded"
+          type="text"
+          placeholder="説明検索"
+          value={descriptionKeyword}
+          onChange={(e) => setDescriptionKeyword(e.target.value)}
         ></input>
       </div>
       {filteredTodos.map((todo) => (
